@@ -5,9 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
+	<button id="connect">CONNECT</button>
+	<br>
+	<button id="disconnect">Disconnect</button>
 	<div class="media">
-		<video id="webcam"></video>
+		<video id="sender"></video>
+		<video id="reciever"></video>
 	</div>
+	<script type="text/javascript" src="node_modules/webrtc-adapter/out/adapter.js"></script>
 	<script type="text/javascript" src="js/stream.js"></script>
 </body>
 </html>

@@ -22,5 +22,8 @@
     "video-capture": {
       "description": "Required to capture video using getUserMedia()"
     }
+  },
+  "dependencies": {
+    "webrtc-adapter": "^2.0.2"
   }
 }
