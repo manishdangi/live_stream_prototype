@@ -3,10 +3,10 @@ function live_stream() {
 	console.log("function has been called");
 	var video =document.getElementById("webcam");
 	var vendorUrl=window.URL;
-	var getUserMedia= navigator.webkitGetUserMedia ;
-	if(getUserMedia)
+	navigator.getUserMedia= navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+	if(navigator.getUserMedia)
 	{
-		navigator.webkitGetUserMedia({
+		navigator.getUserMedia({
 			video:true,
 			audio:false
 		},function(stream){
