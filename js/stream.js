@@ -2,12 +2,10 @@ window.onload=function()
 {
 	rtc1 = new RTCPeerConnection();  // for caller
 	rtc2 = new RTCPeerConnection();	 // for reciever
-	if(rtc1)
-	{
+	if(rtc1) {
 		start();
 	}
-	else
-	{
+	else {
 		alert("This Browser is not supporting the app");
 	}
 }
@@ -23,16 +21,14 @@ function start(){
 	live_stream();
 }
 function connect_peers(){
-	console.log("yes connect peer function has been called");
-
-	send_channel= rtc1.createDataChannel("sendChannel");
-	// rtc1.createOffer(description,handleCreateDescriptionError);
+	// send_channel= rtc1.createDataChannel("sendChannel");
 	
-	rtc1.onicecandidate=function(e){
+	rtc1.onicecandidate=function(e){ // to add the reciever
 		rtc2.addIceCandidate(e.candidate);
+		console.log(e.candidate);
 	}
 
-	rtc2.onicecandidate=function(e){
+	rtc2.onicecandidate=function(e){ // to add the caller
 		rtc1.addIceCandidate(e.candidate);
 	}
 
@@ -43,8 +39,7 @@ function connect_peers(){
 	    .then(answer => rtc2.setLocalDescription(answer))
 	    .then(() => rtc1.setRemoteDescription(rtc2.localDescription))
 	    .catch(function(err){console.log("error in answer")});
-	rtc2.onaddstream=function(evt){
-		console.log("yes something is happenning")
+	rtc2.onaddstream=function(evt){ // when the reciever recieve the video stream
     	reciever_video.src = URL.createObjectURL(evt.stream);
     	reciever_video.play();
     }
@@ -54,22 +49,24 @@ function connect_peers(){
 
 function disconnect_peers()
 {
+	// will later define the function properly
 	console.log("will disconnect later");
 }
 
 
 function live_stream() {
-	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+	navigator.getUserMedia = navigator.getUserMedia || 
+			navigator.webkitGetUserMedia || navigator.mozGetUserMedia; // getting the webcam video
 	if(navigator.getUserMedia)
 	{
 		navigator.getUserMedia({
 			video:{
-				width:400,
-				height:300
+				width:400, // width of screen
+				height:300 // height of screen
 			},
-			audio:false
+			audio:false // you can set it true
 		},function(stream){
-			rtc1.addStream(stream);	
+			rtc1.addStream(stream);	 // send the stream to reciever
 			caller_video.src= URL.createObjectURL(stream);
 			caller_video.play();
 		},function(error){
