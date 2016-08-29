@@ -1,5 +1,6 @@
 window.onload=function()
 {
+	// var signalingChannel = new createSignalingChannel();
 	rtc1 = new RTCPeerConnection();  // for caller
 	rtc2 = new RTCPeerConnection();	 // for reciever
 	if(rtc1) {
@@ -24,33 +25,58 @@ function connect_peers(){
 	// send_channel= rtc1.createDataChannel("sendChannel");
 	
 	rtc1.onicecandidate=function(e){ // to add the reciever
+		if(e.candidate)
+		{
+			rtc2.addIceCandidate(e.candidate);
+			console.log(e.candidate);
+		}
+		else
+		{
+			console.log("no candidate is avialable at this point of time")
+		}
+	}
+
+	rtc1.onicecandidate=function(e){ // to add the caller
 		rtc2.addIceCandidate(e.candidate);
-		console.log(e.candidate);
 	}
 
-	rtc2.onicecandidate=function(e){ // to add the caller
-		rtc1.addIceCandidate(e.candidate);
-	}
+	// rtc1.onnegotiationneeded=function()	// when there is SignallingChannel is available  
+	rtc1.createOffer(localdescription,logerror);
 
-	rtc1.createOffer()
-	    .then(offer => rtc1.setLocalDescription(offer))
-	    .then(() => rtc2.setRemoteDescription(rtc1.localDescription))
-	    .then(() => rtc2.createAnswer())
-	    .then(answer => rtc2.setLocalDescription(answer))
-	    .then(() => rtc1.setRemoteDescription(rtc2.localDescription))
-	    .catch(function(err){console.log("error in answer")});
+
 	rtc2.onaddstream=function(evt){ // when the reciever recieve the video stream
     	reciever_video.src = URL.createObjectURL(evt.stream);
     	reciever_video.play();
     }
+
 }
 
 
+function localdescription(desc)
+{
+	rtc1.setLocalDescription(desc).then(function(){
+		rtc2.setRemoteDescription(rtc1.localDescription).then(function(){
+			rtc2.createAnswer(remotedescription,logerror);
+		})
+	})
+}
+
+function remotedescription(desc){
+	rtc2.setLocalDescription(desc).then(function(){
+		rtc1.setRemoteDescription(rtc2.localDescription)
+	})
+}
+
+function logerror()
+{
+	console.log("yes there is an error by logerror function")
+}
 
 function disconnect_peers()
 {
 	// will later define the function properly
 	console.log("will disconnect later");
+	rtc2=false;
 }
 
 
