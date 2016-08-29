@@ -11,6 +11,8 @@ window.onload=function()
 	}
 }
 
+var candidate_availibility=true;
+
 function start(){
 
 	caller_video =document.getElementById("sender");
@@ -23,21 +25,17 @@ function start(){
 }
 function connect_peers(){
 	// send_channel= rtc1.createDataChannel("sendChannel");
-	
-	rtc1.onicecandidate=function(e){ // to add the reciever
+	// the onicecandidate handler is called whenever a ice candidate is available at remote side
+	rtc1.onicecandidate=function(e){
 		if(e.candidate)
-		{
-			rtc2.addIceCandidate(e.candidate);
-			console.log(e.candidate);
-		}
-		else
-		{
-			console.log("no candidate is avialable at this point of time")
-		}
-	}
+			{
 
-	rtc1.onicecandidate=function(e){ // to add the caller
-		rtc2.addIceCandidate(e.candidate);
+				rtc2.addIceCandidate(e.candidate);
+				console.log(e.candidate);
+			}
+		else {
+			candidate_availibility=true;
+		}	
 	}
 
 	// rtc1.onnegotiationneeded=function()	// when there is SignallingChannel is available  
@@ -76,7 +74,7 @@ function disconnect_peers()
 {
 	// will later define the function properly
 	console.log("will disconnect later");
-	rtc2=false;
+	// rtc2=false;
 }
 
 
@@ -92,7 +90,10 @@ function live_stream() {
 			},
 			audio:false // you can set it true
 		},function(stream){
-			rtc1.addStream(stream);	 // send the stream to reciever
+			if(candidate_availibility==true)
+			{		
+				rtc1.addStream(stream); // send the stream to reciever
+ 			}	 
 			caller_video.src= URL.createObjectURL(stream);
 			caller_video.play();
 		},function(error){
