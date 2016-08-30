@@ -1,6 +1,8 @@
+
+
 window.onload=function()
 {
-	// var signalingChannel = new createSignalingChannel();
+	// var signalingChannel = createSignalingChannel();
 	rtc1 = new RTCPeerConnection();  // for caller
 	rtc2 = new RTCPeerConnection();	 // for reciever
 	if(rtc1) {
@@ -90,7 +92,7 @@ function live_stream() {
 			},
 			audio:false // you can set it true
 		},function(stream){
-			if(candidate_availibility==true)
+			if(candidate_availibility)
 			{		
 				rtc1.addStream(stream); // send the stream to reciever
  			}	 
