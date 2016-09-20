@@ -1,16 +1,33 @@
 
-
 window.onload=function()
 {
 	// var signalingChannel = createSignalingChannel();
+	socket=io.connect("localhost:8000");
+	ask_room_no();
 	rtc1 = new RTCPeerConnection();  // for caller
 	rtc2 = new RTCPeerConnection();	 // for reciever
+	var signalingChannel = new SignalingChannel(); 	
+
 	if(rtc1) {
 		start();
 	}
 	else {
 		alert("This Browser is not supporting the app");
 	}
+}
+
+function ask_room_no()
+{
+	room_no=prompt("please enter a room no");
+	if(room_no=="" || room_no==null)
+	{
+		alert("the room number has to be entered");
+		ask_room_no();
+	}
+	else
+	{
+		socket.emit("room_redirection",JSON.stringify({"room_no":room_no }));
+	}		
 }
 
 var candidate_availibility=true;

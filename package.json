@@ -24,8 +24,9 @@
     }
   },
   "dependencies": {
+    "express": "^4.14.0",
     "http": "0.0.0",
+    "signal-master": "^1.0.1",
     "socket.io": "^1.4.8",
-    "webrtc-adapter": "^2.0.2"
   }
 }
