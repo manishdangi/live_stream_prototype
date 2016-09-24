@@ -2,24 +2,30 @@
 <html>
 <head>
 	<title>STREAMIMG VIDEO</title>
-	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
+<div class="main">
 	<br>
     <form id="createRoom" >
         <input  type="text" id="room" name="room" />
-        <button type="submit">Create it!</button>
+        <button type="submit">Create a Room </button>
     </form>
-    <div id="connection_status">connection status</div>
+    <br>
+    <div id="connection_status">No User Connected</div>
     <br><br>
 	<button id="disconnect">HangUp</button>
 	<br>
 	<br>
-    <div class="videoContainer">
-        <video id="sender"></video>
-        <meter id="localVolume" class="volume" min="-45" max="-20" high="-25" low="-40"></meter>
+</div>    
+    <div id="peers" class="peers">
+        
     </div>
-    <div id="peers"></div>
+    <div class="video_container">
+        <video id="sender"></video>
+        <meter id="local_volume" class="local_volume" min="-45" max="-20" high="-25" low="-40">
+        </meter>
+    </div>
   	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 	<script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
 	<script type="text/javascript" src="../private/js/stream.js"></script>

@@ -42,7 +42,7 @@ var webrtc = new SimpleWebRTC({  // created the webrtc object instance
     });
 
     webrtc.on('localStream', function (stream) {  // when you get the local camera stream		
-        $('#localVolume').show();
+        $('#local_volume').show();
     });
 
     function showVolume(el, volume) 
