@@ -32,10 +32,6 @@ var webrtc = new SimpleWebRTC({  // created the webrtc object instance
                         console.log(err);
                         alert("an error occured in room creation");
                     }
-                    else
-                    {
-                        alert("there is no error in creating the room");
-                    }
                 });
             })
         }
@@ -93,7 +89,7 @@ var webrtc = new SimpleWebRTC({  // created the webrtc object instance
             video_container.appendChild(vol);
 
 
-            if (peer && peer.pc) 
+            if(peer && peer.pc) 
             {
                 peer.pc.on('iceConnectionStateChange', function (event) {
                     switch (peer.pc.iceConnectionState)
