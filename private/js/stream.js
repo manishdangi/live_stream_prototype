@@ -37,8 +37,8 @@ var webrtc = new SimpleWebRTC({  // created the webrtc object instance
         }
     });
 
-    webrtc.on('localStream', function (stream) {  // when you get the local camera stream		
-        $('#local_volume').show();
+    webrtc.on('localStream', function (stream) {  
+        // when you get the local camera stream		
     });
 
     function showVolume(el, volume) 
@@ -55,13 +55,11 @@ var webrtc = new SimpleWebRTC({  // created the webrtc object instance
 
 
     webrtc.on('videoAdded', function (video, peer) { // when a peer is added
+        $("#sender").show();
+        $("#local_volume").show();
         var peers = document.getElementById('peers');
         if (peers) {
             var video_container = document.createElement('div');
-            if(video_container)
-            {
-                //alert("we found the peer element") 
-            }
             video_container.className = 'peer_video_container';
             video_container.id = 'container_' + webrtc.getDomId(peer); 
                 /* 
